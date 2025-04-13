@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Tickets — Shania Twain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background: url('https://prismic-images.tmol.io/ticketmaster-tm-global/59bec04f-7203-4985-b2d4-ad7182bca29a_EADP-Desktop-Header-Shania+Twain.jpg?auto=compress,format&rect=0,0,2425,1023&w=1024&h=432') center/cover no-repeat;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: -50px auto 50px;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            background: #e60073;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background: #aaa;
+        }
+
+        .error {
+            color: #e60000;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Shania Twain Tickets</h1>
+    </header>
+
+    <div class="container">
+        <form id="ticket-form" novalidate>
+
+            <input type="hidden" name="ConcertId" value="1" />
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="Email" type="email" placeholder="john.doe@example.com" required>
+                <div class="error" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input id="name" name="Name" type="text" placeholder="John Doe" required>
+                <div class="error" id="name-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input id="phone" name="Phone" type="tel" pattern="^\d{3}-\d{3}-\d{4}$" placeholder="555-555-5555"
+                    required>
+                <div class="error" id="phone-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <select id="quantity" name="Quantity" required>
+                    <option value="">Select…</option>
+                    <script>
+                        for (let i = 1; i <= 8; i++) {
+                            document.write(`<option value="${i}">${i}</option>`);
+                        }
+                    </script>
+                </select>
+                <div class="error" id="quantity-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="creditCard">Credit Card</label>
+                <input id="creditCard" name="CreditCard" type="text" pattern="^\d{13,16}$"
+                    placeholder="4111111111111111" required>
+                <div class="error" id="creditCard-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="expiration">Expiration (MM/YY)</label>
+                <input id="expiration" name="Expiration" type="text" pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+                    placeholder="12/25" required>
+                <div class="error" id="expiration-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="securityCode">Security Code</label>
+                <input id="securityCode" name="SecurityCode" type="text" pattern="^\d{3,4}$" placeholder="123" required>
+                <div class="error" id="securityCode-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input id="address" name="Address" type="text" placeholder="123 Main St" required>
+                <div class="error" id="address-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                <input id="city" name="City" type="text" placeholder="Metropolis" required>
+                <div class="error" id="city-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="province">Province/State</label>
+                <input id="province" name="Province" type="text" placeholder="State" required>
+                <div class="error" id="province-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="postalCode">Postal Code</label>
+                <input id="postalCode" name="PostalCode" type="text" placeholder="12345" pattern="^[A-Za-z0-9\s\-]{3,10}$" required>
+                <div class="error" id="postalCode-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input id="country" name="Country" type="text" placeholder="USA" required>
+                <div class="error" id="country-error"></div>
+            </div>
+
+            <button type="submit">Purchase Tickets</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('ticket-form');
+        const apiUrl = 'https://w0429133-webdev-tickethubapi-webapp-gxfue6hvgjbjdbbx.canadacentral-01.azurewebsites.net/api/ticket';
+
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            clearErrors();
+
+            if (!form.checkValidity()) {
+                showErrors();
+                return;
+            }
+
+            const data = Object.fromEntries(new FormData(form).entries());
+            data.ConcertId = parseInt(data.ConcertId, 10);
+            data.Quantity = parseInt(data.Quantity, 10);
+
+            try {
+                const resp = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (resp.ok) {
+                    alert('Thank you! Your purchase is being processed.');
+                    form.reset();
+                } else {
+                    const text = await resp.text();
+                    alert('Server error: ' + text);
+                }
+            } catch (err) {
+                alert('Network error: ' + err.message);
+            }
+        });
+
+        function showErrors() {
+            Array.from(form.elements).forEach(el => {
+                if (el.willValidate && !el.checkValidity()) {
+                    const msg = el.validationMessage;
+                    document.getElementById(el.id + '-error').textContent = msg;
+                }
+            });
+        }
+
+        function clearErrors() {
+            form.querySelectorAll('.error').forEach(div => div.textContent = '');
+        }
+    </script>
+</body>
+
+</html>
